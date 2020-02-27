@@ -39,7 +39,7 @@ Get-ChildItem -Path $sqlPath -Filter *.sql | ForEach-Object {
 
     }
 
-    #READ SQL QUERY (.sql same name as script)
+    #READ SQL QUERY FILE
     $query = Get-Content $_.FullName
 
     #EXECUTE SQL QUERY
