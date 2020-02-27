@@ -52,6 +52,6 @@ WHERE
 
 	st.Status = 'Enrolled'
 	
-	and (p.Deceased = 0)
+	and p.Deceased = 0
 	
-	and (ps.Custody = 1 OR ps.Correspondence = 1)
+	and ps.Custody = 1
