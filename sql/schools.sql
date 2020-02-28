@@ -4,6 +4,8 @@ SELECT
 	
 	cs.SchoolName as 'School_name',
 	
+	cs.SchoolCode as 'School_number',
+	
 	cs.CollegeBoardSchoolCode as 'State_id',
 	
 	cs.Address as 'School_address',
@@ -15,7 +17,6 @@ SELECT
 	cs.Zip as 'School_zip',
 	
 	cs.Phone as 'School_phone'
-
 	
 FROM
 
