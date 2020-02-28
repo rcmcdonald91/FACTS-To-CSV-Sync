@@ -6,8 +6,7 @@ param (
 
 )
 
-##Determine Start Time
-$startTime = Get-Date
+Write-Host "[$(Get-Date)] Scripted Started..." -ForegroundColor Green
 
 #SETs FACTS ODBC CREDENTIALS
 $factsLoginName = "<REPLACE ME>"
@@ -19,8 +18,6 @@ $factsPort = "<REPLACE ME>"
 ##################################
 
 Get-ChildItem -Path $sqlPath -Filter *.sql | ForEach-Object {
-
-    Write-Host "[$(Get-Date)] Processsing: $($_.FullName)" -ForegroundColor Green
 
     #CREATE ODBC CONNECTION OBJECT
     $conn = New-Object System.Data.Odbc.OdbcConnection
@@ -39,8 +36,10 @@ Get-ChildItem -Path $sqlPath -Filter *.sql | ForEach-Object {
 
     }
 
-    #READ SQL QUERY FILE
+    #READ SQL QUERY (.sql same name as script)
     $query = Get-Content $_.FullName
+
+    Write-Host "[$(Get-Date)] Executing: $($_.FullName)" -ForegroundColor Green
 
     #EXECUTE SQL QUERY
     $cmd = New-object System.Data.Odbc.OdbcCommand($query, $conn)
@@ -54,11 +53,12 @@ Get-ChildItem -Path $sqlPath -Filter *.sql | ForEach-Object {
     #CLOSE AND CLEANUP
     $conn.close()
 
-    $ds.Tables[0] | Export-Csv -Path "$outputPath\$($_.BaseName).csv" -NoTypeInformation
+    $csvPath = "$outputPath\$($_.BaseName).csv"
 
-    ##Determine End Time
-    $TotalTime = $("{0:hh\:mm\:ss}" -f (New-TimeSpan -Start $StartTime -End $(Get-Date)))
+    Write-Host "[$(Get-Date)] Writing: $csvPath" -ForegroundColor Green
+
+    $ds.Tables[0] | Export-Csv -Path "$csvPath" -NoTypeInformation
 
 }
 
-Write-Host "Script completed in $TotalTime" -ForegroundColor Green
+Write-Host "[$(Get-Date)] Scripted completed..." -ForegroundColor Green
