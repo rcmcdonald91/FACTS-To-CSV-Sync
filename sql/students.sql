@@ -28,7 +28,7 @@ SELECT
 	
 	ps.Relationship as 'Contact_relationship',
 	
-	'' as 'Contact_type',
+	'Guardian' as 'Contact_type',
 	
 	CONCAT(p.FirstName,' ',p.LastName) as 'Contact_name',
 	
