@@ -1,10 +1,10 @@
-DECLARE @sc VARCHAR(255) = (SELECT cs.Schoolcode FROM dbo.ConfigSchool cs)
+DECLARE @schoolCode VARCHAR(255) = (SELECT cs.Schoolcode FROM dbo.ConfigSchool cs)
 
-DECLARE @syid INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
+DECLARE @currentSchoolYearID INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
 
 SELECT DISTINCT
 
-	@sc as 'School_id',
+	@schoolCode as 'School_id',
 	
 	st.PersonID as 'Teacher_id',
 	
@@ -27,13 +27,13 @@ SELECT DISTINCT
 	'' as 'Password'
 	
 FROM
-
 	dbo.Staff st
-
-JOIN dbo.Classes cl ON cl.StaffID = st.PersonID OR cl.AltStaffID = st.PersonID
+	
+JOIN dbo.Classes cl
+	ON cl.StaffID = st.PersonID 
+	OR cl.AltStaffID = st.PersonID 
+	OR cl.AidID = st.PersonID
 
 WHERE
-
 	st.Active = 1
-	
-	AND cl.YearID = @syid
+	AND cl.YearID = @currentSchoolYearID
