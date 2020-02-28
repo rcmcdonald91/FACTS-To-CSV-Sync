@@ -1,4 +1,4 @@
-DECLARE @syid INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
+DECLARE @currentSchoolYearID INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
 
 SELECT
 	
@@ -20,4 +20,4 @@ WHERE
 	
 	st.Status = 'Enrolled'
 	
-	AND cl.YearID = @syid
+	AND cl.YearID = @currentSchoolYearID
