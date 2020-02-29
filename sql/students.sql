@@ -41,17 +41,16 @@ SELECT
 	'' as 'Password'
 	
 FROM
-
 	dbo.Students st
 
-JOIN dbo.Parent_Student ps ON ps.StudentID = st.StudentID
+JOIN dbo.Parent_Student ps 
+	ON ps.StudentID = st.StudentID
 
-JOIN dbo.Person p on p.PersonID = ps.ParentID
+JOIN dbo.Person p
+	ON p.PersonID = ps.ParentID
 	
 WHERE
-
 	st.Status = 'Enrolled'
-	
-	and p.Deceased = 0
-	
-	and ps.Custody = 1
+	AND p.Deceased = 0	
+	AND ps.Custody = 1
+	AND p.PersonID IN (SELECT MIN(p.PersonID) FROM dbo.Person p GROUP BY p.Email)
