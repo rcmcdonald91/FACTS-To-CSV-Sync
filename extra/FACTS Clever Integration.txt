@@ -1,0 +1,14 @@
+Clever SFTP Username
+Clever SFTP Password
+Would you like to include the student address? Yes / No
+What would you like to use as the Student ID? Person/Student ID or UDID
+What would you like to use as the Staff ID? Person/Student ID or UDID
+What would you like to use for the Student Username? SIS Username or Email
+What would you like to use for the Staff Username? SIS Username or Email
+Would you like to include parent/guardian information? Yes / No
+Would you like to include emergency contact information? Yes / No
+Would you like to include pickup contact information? Yes / No
+Would you like to include a student school number (not the Student ID)? Yes / No
+Please provide the school number, if applicable.
+Would you like to include a student state ID? Yes / No
+Please provide the state ID, if applicable.
