@@ -46,11 +46,11 @@ FROM
 JOIN dbo.Parent_Student ps 
 	ON ps.StudentID = st.StudentID
 
-JOIN dbo.Person p
+JOIN  dbo.Person p
 	ON p.PersonID = ps.ParentID
 	
 WHERE
 	st.Status = 'Enrolled'
 	AND p.Deceased = 0	
 	AND ps.Custody = 1
-	AND p.PersonID IN (SELECT MIN(p.PersonID) FROM dbo.Person p GROUP BY p.Email)
+	AND ps.ParentID IN (SELECT MIN(p.PersonID) FROM dbo.Person p JOIN dbo.Parent_Student ps ON ps.ParentID = p.PersonID GROUP BY p.Email)
