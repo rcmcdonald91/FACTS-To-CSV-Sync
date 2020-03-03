@@ -35,5 +35,5 @@ JOIN dbo.Classes cl
 	OR cl.AidID = st.PersonID
 
 WHERE
-	st.Active = 1
-	AND cl.YearID = @currentSchoolYearID
+	cl.YearID = @currentSchoolYearID
+	AND st.Active = 1
