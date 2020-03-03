@@ -1,3 +1,5 @@
+DECLARE @currentSchoolYearID INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
+
 SELECT
 
 	co.SchoolCode as 'School_id',
@@ -27,13 +29,34 @@ SELECT
 	CONVERt(varchar, sy.LastDay, 101) as 'Term_end'
 	
 FROM
-
 	dbo.Classes cl
 	
-JOIN dbo.Courses co ON co.CourseID = cl.CourseID
+JOIN dbo.Courses co 
+	ON co.CourseID = cl.CourseID
 
-JOIN dbo.SchoolYear sy ON sy.YearID = cl.YearID
+JOIN dbo.SchoolYear sy 
+	ON sy.YearID = cl.YearID
  
 WHERE
-
-	cl.YearID = (SELECT MAX(YearID) FROM dbo.SchoolYear sy)
+	cl.YearID = @currentSchoolYearID
+	AND cl.ClassID IN (
+	
+			SELECT
+				cl.ClassID
+				
+			FROM
+				dbo.Classes cl
+	
+			JOIN dbo.Roster r
+				ON r.ClassID = cl.ClassID
+		
+			JOIN dbo.Students st
+				ON st.StudentID = r.StudentID
+	
+			WHERE
+				cl.YearID = @currentSchoolYearID
+				AND st.Status = 'Enrolled'
+		
+			GROUP BY cl.ClassID
+		
+	)
