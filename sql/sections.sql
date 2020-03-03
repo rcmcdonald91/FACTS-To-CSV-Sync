@@ -60,3 +60,24 @@ WHERE
 			GROUP BY cl.ClassID
 		
 	)
+	
+	AND cl.ClassID IN (
+	
+			SELECT 
+				cl.ClassID
+				
+			FROM
+				dbo.Classes cl
+	
+			JOIN dbo.Staff st
+				ON st.StaffID = cl.StaffID
+				OR st.StaffID = cl.AltStaffID
+				OR st.StaffID = cl.AidID
+	
+			WHERE
+				cl.YearID = @currentSchoolYearID
+				AND st.Active = 1
+	
+			GROUP BY cl.ClassID
+	
+	)
