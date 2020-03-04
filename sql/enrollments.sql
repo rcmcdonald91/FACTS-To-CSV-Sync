@@ -9,15 +9,14 @@ SELECT
 	st.StudentID as 'Student_id'
 
 FROM
-
 	dbo.Students st
 	
-JOIN dbo.Roster r ON r.StudentID = st.StudentID
+JOIN dbo.Roster r 
+	ON r.StudentID = st.StudentID
 
-JOIN dbo.Classes cl ON cl.ClassID = r.ClassID
+JOIN dbo.Classes cl 
+	ON cl.ClassID = r.ClassID
 	
 WHERE
-	
 	st.Status = 'Enrolled'
-	
 	AND cl.YearID = @currentSchoolYearID
