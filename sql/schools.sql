@@ -34,4 +34,4 @@ JOIN dbo.Staff st
 WHERE
 	cs.Active = 1
 	AND st.Active = 1
-	AND st.StaffID IN (SELECT MIN(st.StaffID) FROM dbo.Staff st WHERE st.Occupation = 'Principal' GROUP BY st.StaffID)
+	AND st.StaffID IN (SELECT MIN(st.StaffID) FROM dbo.Staff st WHERE st.Occupation = 'Principal' AND st.Active = 1 GROUP BY st.Occupation)
