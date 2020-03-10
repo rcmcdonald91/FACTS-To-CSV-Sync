@@ -1,4 +1,4 @@
-DECLARE @currentSchoolYearID INT = (SELECT MAX(YearID) FROM dbo.SchoolYear y)
+DECLARE @currentSchoolYearID INT = (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
 
 SELECT
 
