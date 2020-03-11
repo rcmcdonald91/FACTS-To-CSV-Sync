@@ -1,10 +1,6 @@
-DECLARE @schoolCode VARCHAR(255) = (SELECT cs.Schoolcode FROM dbo.ConfigSchool cs)
-
-DECLARE @currentSchoolYearID INT = (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
-
 SELECT DISTINCT
 
-	@schoolCode as 'School_id',
+	ss.SchoolCode as 'School_id',
 	
 	st.PersonID as 'Staff_id',
 	
@@ -26,6 +22,9 @@ SELECT DISTINCT
 	
 FROM
 	dbo.Staff st
+	
+JOIN dbo.StaffSchools ss
+	ON ss.StaffID = st.StaffID
 
 WHERE
 	st.Active = 1
@@ -45,6 +44,6 @@ WHERE
 
 		WHERE
 			st.Active = 1
-			AND cl.YearID = @currentSchoolYearID
+			AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
 			
 	)
