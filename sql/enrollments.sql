@@ -1,5 +1,3 @@
-DECLARE @currentSchoolYearID INT = (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
-
 SELECT
 	
 	st.SchoolCode as 'School_id',
@@ -19,4 +17,4 @@ JOIN dbo.Classes cl
 	
 WHERE
 	st.Status = 'Enrolled'
-	AND cl.YearID = @currentSchoolYearID
+	AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
