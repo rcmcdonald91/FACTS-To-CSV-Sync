@@ -1,8 +1,6 @@
-DECLARE @schoolCode VARCHAR(255) = (SELECT cs.Schoolcode FROM dbo.ConfigSchool cs)
-
 SELECT
 
-	@schoolCode as 'School_id',
+	st.SchoolCode as 'School_id',
 	
 	st.PersonID as 'Student_id',
 	
