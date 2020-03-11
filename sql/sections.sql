@@ -1,5 +1,3 @@
-DECLARE @currentSchoolYearID INT = (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
-
 SELECT
 
 	co.SchoolCode as 'School_id',
@@ -38,7 +36,7 @@ JOIN dbo.SchoolYear sy
 	ON sy.YearID = cl.YearID
  
 WHERE
-	cl.YearID = @currentSchoolYearID
+	cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
 	AND cl.ClassID IN (
 	
 			SELECT
@@ -54,8 +52,8 @@ WHERE
 				ON st.StudentID = r.StudentID
 	
 			WHERE
-				cl.YearID = @currentSchoolYearID
-				AND st.Status = 'Enrolled'
+				st.Status = 'Enrolled'
+				AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
 		
 			GROUP BY cl.ClassID
 		
@@ -75,8 +73,8 @@ WHERE
 				OR st.StaffID = cl.AidID
 	
 			WHERE
-				cl.YearID = @currentSchoolYearID
-				AND st.Active = 1
+				st.Active = 1
+				AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
 	
 			GROUP BY cl.ClassID
 	
