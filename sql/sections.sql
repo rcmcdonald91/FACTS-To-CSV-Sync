@@ -4,11 +4,11 @@ SELECT
 	
 	cl.ClassID as 'Section_id',
 	
-	cl.StaffID as 'Teacher_id',
+	NULLIF(cl.StaffID, 0) AS 'Teacher_id',
 	
-	cl.AltStaffID as 'Teacher_2_id',
+	NULLIF(cl.AltStaffID, 0) AS 'Teacher_2_id',
 	
-	cl.AidID as 'Teacher_3_id',
+	NULLIF(cl.AidID, 0) as 'Teacher_3_id',
 	
 	CONCAT(cl.Name,'-',cl.Section) as 'Name',
 	
