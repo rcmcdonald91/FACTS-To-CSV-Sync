@@ -1,18 +1,18 @@
 {
   "General": {
-	  "SqlDir": "",
-	  "OutputDir": ""
+    "SqlDir": "",
+    "OutputDir": ""
   },
   "Logging": {
-	  "LogDir": "",
-	  "Enabled": true
+    "LogDir": "",
+    "Enabled": true
   },
   "ODBC": {
     "LoginName": "",
     "LoginPassword": "",
     "DatabaseName": "",
-	  "ServerAddress": "",
-	  "ServerPort": ""
+    "ServerAddress": "",
+    "ServerPort": ""
   },
   "Email": {
     "SmtpServer": "",
