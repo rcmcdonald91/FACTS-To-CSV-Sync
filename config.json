@@ -24,5 +24,15 @@
     "SenderAddress": "",
     "ReceiverAddresses": [],
     "Enabled": true
+  },
+  "PreAction": {
+    "Cmd": "",
+    "Arguments": "",
+    "Enabled": false
+  },
+  "PostAction": {
+    "Cmd": "",
+    "Arguments": "",
+    "Enabled": false
   }
 }
