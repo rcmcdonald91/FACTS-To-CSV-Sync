@@ -9,17 +9,21 @@ $textEncoding = [System.Text.Encoding]::UTF8
 
 $config = Get-Content -Path $ConfigFile | ConvertFrom-Json
 
+Write-Host "[$(Get-Date)] Script Started..." -ForegroundColor Green
+
+Write-Host "[$(Get-Date)] Host: $env:computername" -ForegroundColor Green
+
 if($config.Logging.Enabled) {
 
     Start-Transcript -OutputDirectory $config.Logging.LogDir
     
 }
 
-Write-Host "[$(Get-Date)] Script Started..." -ForegroundColor Green
+if($config.PreAction.Enabled) {
+    
+    Write-Host "[$(Get-Date)] Executing Pre Action" -ForegroundColor Green
 
-Write-Host "[$(Get-Date)] Host: $env:computername" -ForegroundColor Green
-
-##################################
+}
 
 # DELETE OLD CSV FILES
 Get-ChildItem -Path $config.General.OutputDir -Recurse -Force | Where-Object { -not ($_.PSIsContainer) } | Remove-Item -Force
@@ -72,6 +76,12 @@ Get-ChildItem -Path $config.General.SqlDir -Filter *.sql | ForEach-Object {
 
 }
 
+if($config.PostAction.Enabled) {
+    
+    Write-Host "[$(Get-Date)] Executing Post Action" -ForegroundColor Green
+
+}
+
 Write-Host "[$(Get-Date)] Script Completed..." -ForegroundColor Green
 
 if($config.Logging.Enabled) {
@@ -84,19 +94,21 @@ if($config.Logging.Enabled) {
 
         $mailArguments = @{
 
-            SmtpServer = $config.Email.SmtpServer
+            SmtpServer   = $config.Email.SmtpServer
 
-            Port = $config.Email.SmtpPort
+            Port         = $config.Email.SmtpPort
 
-            From = $config.Email.SenderAddress
+            From         = $config.Email.SenderAddress
 
-            To = $config.Email.ReceiverAddresses
+            To           = $config.Email.ReceiverAddresses
 
-            UseSsl = $config.Email.SmtpSecure
+            Subject      = $config.Email.Subject
 
-            Encoding = $textEncoding
+            UseSsl       = $config.Email.SmtpSecure
 
-            Attachments = $logFile.FullName
+            Encoding     = $textEncoding
+
+            Attachments  = $logFile.FullName
 
         }
 
