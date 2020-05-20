@@ -1,0 +1,28 @@
+{
+  "General": {
+	  "SqlDir": "",
+	  "OutputDir": ""
+  },
+  "Logging": {
+	  "LogDir": "",
+	  "Enabled": true
+  },
+  "ODBC": {
+    "LoginName": "",
+    "LoginPassword": "",
+    "DatabaseName": "",
+	  "ServerAddress": "",
+	  "ServerPort": ""
+  },
+  "Email": {
+    "SmtpServer": "",
+    "SmtpPort": 587,
+    "SmtpUser": null,
+    "SmtpPassword": null,
+    "SmtpSecure": true,
+    "SenderName": "",
+    "SenderAddress": "",
+    "ReceiverAddresses": [],
+    "Enabled": true
+  }
+}
