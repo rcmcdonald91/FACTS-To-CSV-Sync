@@ -1,27 +1,27 @@
 {
   "General": {
-	"EmailEnabled": true,
-	"LoggingEnabled": true,
-	"PreActionEnabled": false,
-	"PostActionEnabled": true
+    "EmailEnabled": true,
+    "LoggingEnabled": true,
+    "PreActionEnabled": false,
+    "PostActionEnabled": true
   },
   "Paths": {
-  	"SqlDir": "C:\\Scripts\\clever_sync\\sql",
-	  "OutputDir": "C:\\Scripts\\clever_sync\\output",
+    "SqlDir": "C:\\Scripts\\clever_sync\\sql",
+    "OutputDir": "C:\\Scripts\\clever_sync\\output",
     "LogDir": "C:\\Scripts\\clever_sync\\logs"
   },
   "OdbcArgs": {
     "LoginName": "",
     "LoginPassword": "",
     "DatabaseName": "",
-	  "ServerAddress": "",
-	  "ServerPort": "1433"
+    "ServerAddress": "",
+    "ServerPort": "1433"
   },
   "MailArgs": {
     "SmtpServer": "smtp-relay.gmail.com",
     "Port": 587,
     "UseSsl": true,
-	  "Subject": "Clever Sync",
+    "Subject": "Clever Sync",
     "From": "",
     "To": ["", ""]
   },
@@ -31,6 +31,6 @@
   },
   "PostActionArgs": {
     "FilePath": "C:\\Tools\\rclone\\rclone.exe",
-	  "ArgumentList": "sync C:\\Scripts\\clever_sync\\output CleverSFTP: --config C:\\Tools\\rclone\\CleverSFTP.conf --progress"
+    "ArgumentList": "sync C:\\Scripts\\clever_sync\\output CleverSFTP: --config C:\\Tools\\rclone\\CleverSFTP.conf --progress"
   }
 }
