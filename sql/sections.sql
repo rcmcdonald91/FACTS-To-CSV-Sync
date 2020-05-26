@@ -10,7 +10,7 @@ SELECT
 	
 	NULLIF(cl.AidID, 0) as 'Teacher_3_id',
 	
-	CONCAT(cl.Name,'-',cl.Section) as 'Name',
+	CONCAT(co.Title,' - ',cl.Name,'-',cl.Section) as 'Name',
 	
 	'' as 'Grade',
 	
@@ -34,48 +34,64 @@ JOIN dbo.Courses co
 
 JOIN dbo.SchoolYear sy 
 	ON sy.YearID = cl.YearID
+
+JOIN dbo.ConfigSchool cs
+	ON cs.SchoolCode = co.SchoolCode
  
 WHERE
-	cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
+	cl.YearID = cs.DefaultYearID
 	AND cl.ClassID IN (
 	
-			SELECT
-				cl.ClassID
+		SELECT
+			
+			cl.ClassID
+							
+		FROM
+			
+			dbo.Classes cl
+							
+		JOIN dbo.Courses co 
+			ON co.CourseID = cl.CourseID
 				
-			FROM
-				dbo.Classes cl
+		JOIN dbo.Roster r
+			ON r.ClassID = cl.ClassID
+					
+		JOIN dbo.Students st
+			ON st.StudentID = r.StudentID
+				
+		JOIN dbo.ConfigSchool cs
+			ON cs.SchoolCode = co.SchoolCode
+				
+		WHERE
+			st.Status = 'Enrolled'
+			AND cl.YearID = cs.DefaultYearID
+				
+		GROUP BY cl.ClassID
 	
-			JOIN dbo.Roster r
-				ON r.ClassID = cl.ClassID
-		
-			JOIN dbo.Students st
-				ON st.StudentID = r.StudentID
-	
-			WHERE
-				st.Status = 'Enrolled'
-				AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
-		
-			GROUP BY cl.ClassID
-		
 	)
 	
 	AND cl.ClassID IN (
 	
-			SELECT 
-				cl.ClassID
+		SELECT 
+			
+			cl.ClassID
 				
-			FROM
-				dbo.Classes cl
+		FROM
+			dbo.Classes cl
+				
+		JOIN dbo.Courses co 
+			ON co.CourseID = cl.CourseID
 	
-			JOIN dbo.Staff st
-				ON st.StaffID = cl.StaffID
-				OR st.StaffID = cl.AltStaffID
-				OR st.StaffID = cl.AidID
+		JOIN dbo.Staff st
+			ON st.StaffID = cl.StaffID OR st.StaffID = cl.AltStaffID OR st.StaffID = cl.AidID
+				
+		JOIN dbo.ConfigSchool cs
+			ON cs.SchoolCode = co.SchoolCode
+				
+		WHERE
+			st.Active = 1
+			AND cl.YearID = cs.DefaultYearID
 	
-			WHERE
-				st.Active = 1
-				AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
-	
-			GROUP BY cl.ClassID
+		GROUP BY cl.ClassID
 	
 	)
