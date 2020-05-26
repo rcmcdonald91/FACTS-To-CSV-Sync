@@ -35,15 +35,20 @@ WHERE
 			st.PersonID
 	
 		FROM
+		
 			dbo.Staff st
 
 		JOIN dbo.Classes cl
-			ON cl.StaffID = st.PersonID 
-			OR cl.AltStaffID = st.PersonID 
-			OR cl.AidID = st.PersonID
-
+			ON cl.StaffID = st.PersonID OR cl.AltStaffID = st.PersonID OR cl.AidID = st.PersonID
+			
+		JOIN dbo.Courses co 
+			ON co.CourseID = cl.CourseID
+			
+		JOIN dbo.ConfigSchool cs
+			ON cs.SchoolCode = co.SchoolCode
+			
 		WHERE
 			st.Active = 1
-			AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
+			AND cl.YearID = cs.DefaultYearID
 			
 	)
