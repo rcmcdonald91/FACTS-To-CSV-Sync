@@ -6,7 +6,7 @@ SELECT
 	
 	st.PersonID as 'Student_number',
 	
-	'' as 'State_id',
+	st.SchoolID as 'State_id',
 	
 	st.LastName as 'Last_name',
 	
@@ -51,5 +51,5 @@ WHERE
 	st.Status = 'Enrolled'
 	AND p.Deceased = 0	
 	AND ps.Custody = 1
-	AND ps.ParentID IN (SELECT MIN(p.PersonID) FROM dbo.Person p JOIN dbo.Parent_Student ps ON ps.ParentID = p.PersonID GROUP BY p.Email)
+	AND ps.ParentID IN (SELECT MIN(p.PersonID) FROM dbo.Person p JOIN dbo.Parent_Student ps ON ps.ParentID = p.PersonID GROUP BY ps.StudentID, p.Email)
 	AND ps.ParentID NOT IN (SELECT st.StudentID FROM dbo.Students st WHERE st.Status = 'Enrolled')
