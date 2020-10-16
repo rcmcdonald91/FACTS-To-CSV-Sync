@@ -32,7 +32,13 @@ JOIN dbo.Classes cl
 	ON cl.StaffID = st.PersonID 
 	OR cl.AltStaffID = st.PersonID 
 	OR cl.AidID = st.PersonID
+	
+JOIN dbo.ConfigSchool cs
+	ON cs.SchoolCode = ss.SchoolCode
+	
+JOIN dbo.SchoolYear y
+	ON y.YearID = cs.DefaultYearID
 
 WHERE
 	st.Active = 1
-	AND cl.YearID IN (SELECT YearID FROM dbo.SchoolYear y WHERE GETDATE() BETWEEN y.FirstDay AND y.LastDay)
+	AND cl.YearID = cs.DefaultYearID
