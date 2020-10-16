@@ -18,7 +18,7 @@ SELECT
 	
 	st.Gender as 'Gender',
 	
-	st.ClassOF as 'Graduation_year',
+	st.ClassOf as 'Graduation_year',
 	
 	CONVERT(varchar, st.Birthdate, 101) as 'DOB',
 	
@@ -41,15 +41,15 @@ SELECT
 FROM
 	dbo.Students st
 
-JOIN dbo.Parent_Student ps 
+LEFT JOIN dbo.Parent_Student ps 
 	ON ps.StudentID = st.StudentID
-
-JOIN  dbo.Person p
-	ON p.PersonID = ps.ParentID
-	
-WHERE
-	st.Status = 'Enrolled'
-	AND p.Deceased = 0	
 	AND ps.Custody = 1
 	AND ps.ParentID IN (SELECT MIN(p.PersonID) FROM dbo.Person p JOIN dbo.Parent_Student ps ON ps.ParentID = p.PersonID GROUP BY ps.StudentID, p.Email)
 	AND ps.ParentID NOT IN (SELECT st.StudentID FROM dbo.Students st WHERE st.Status = 'Enrolled')
+
+LEFT JOIN  dbo.Person p
+	ON p.PersonID = ps.ParentID
+	AND p.Deceased = 0
+	
+WHERE
+	st.Status = 'Enrolled'
